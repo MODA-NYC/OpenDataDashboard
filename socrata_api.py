@@ -110,5 +110,5 @@ manual_bad_status.columns=['agency','manu_bad_status']
 
 
 agency_status_check=concat_dfs[['agency','total_assets','Automated','auto_bad_status','Manual','manu_bad_status']]
-agency_status_check=agency_status_check.rename(index=str,columns={'agency':'Agency','total_assets': 'Total Assets','Automated':'Automated','auto_bad_status':'A: Not Updated','Manual':'Manual','manu_bad_status':'M: Not Updated'})
+agency_status_check=agency_status_check.rename(index=str,columns={'agency':'Agency','total_assets': 'Total Assets','Automated':'Automated','auto_bad_status':'Automated Not Updated','Manual':'Manual','manu_bad_status':'Manual Not Updated'})
 agency_status_check=agency_status_check.to_dict('records')
