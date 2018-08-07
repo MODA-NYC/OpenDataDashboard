@@ -1,11 +1,11 @@
 import pandas as pd
-from ga_functions import return_ga_data, save_df_to_excel
+from ga_functions import return_ga_data
 
 
 #collect users, sessions, pageviews (usp) from google analytics api
 def load_ga_data ():
   return pd.DataFrame(return_ga_data(
-      start_date='2016-05-20',
+      start_date='2017-09-21',
       end_date='today',
       view_id='82639170',
       metrics=[
@@ -25,7 +25,7 @@ def load_ga_data ():
 
 def load_sources():
   return pd.DataFrame(return_ga_data(
-      start_date='2016-05-20',
+      start_date='2017-09-21',
       end_date='today',
       view_id='82639170',
       metrics=[

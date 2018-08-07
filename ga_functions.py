@@ -69,8 +69,3 @@ def return_ga_data(start_date, end_date, view_id, metrics, dimensions, split_dat
 
         return df_total
 
-
-def save_df_to_excel(df, path, file_name, sheet_name):
-    writer = pd.ExcelWriter(path+file_name+'.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name=sheet_name)
-    writer.save()
