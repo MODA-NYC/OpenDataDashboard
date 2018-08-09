@@ -18,6 +18,12 @@ from credentials import screendoor_key, screendoor_project_id
 records = '10000'
 
 
+last_year = datetime.now().year-1
+this_month = datetime.now().month
+last_12_months = datetime(last_year, this_month, 1)
+last_12_months = last_12_months.strftime('%Y-%m-%d')
+
+
 #read in the open data customer support requests using the screendoor api
 api_request = requests.get('https://screendoor.dobt.co/api/projects/'+screendoor_project_id+'/responses?per_page='+records+'&v=0&api_key='+screendoor_key)
 screendoor_raw_data = api_request.json()
@@ -53,14 +59,14 @@ screendoor_df['request_type_grouped'] = np.select(status_conditions, status_choi
 screendoor_df['update_time']=(screendoor_df.updated_at-screendoor_df.submitted_at)/np.timedelta64(1,'D')
 
 #count requests by type and status (top groups)
-requests_by_status_grouped = screendoor_df.groupby(['request_type_grouped','status', pd.Grouper(key='submitted_at', freq='W')])['id'].count()
+requests_by_status_grouped = screendoor_df[screendoor_df['submitted_at']>=last_12_months]
+requests_by_status_grouped = requests_by_status_grouped.groupby(['request_type_grouped','status'])[['id']].count()
 requests_by_status_grouped = requests_by_status_grouped.reset_index()
-requests_by_status_grouped = requests_by_status_grouped[requests_by_status_grouped['submitted_at']>='2017-03-04']
 
 #count monthly submissions by type
 monthly_submissions = screendoor_df.groupby(['request_type_grouped', pd.Grouper(key='submitted_at', freq='M')])['id'].count()
 monthly_submissions = monthly_submissions.reset_index()
-monthly_submissions = monthly_submissions[monthly_submissions['submitted_at']>='2017-03-04']
+monthly_submissions = monthly_submissions[monthly_submissions['submitted_at']>=last_12_months]
 
 #to find average resolution time: 
 #1. calculate monthly update time by request type and week
@@ -77,4 +83,4 @@ monthly_resolution_count = monthly_resolution_count.rename(index=str,columns={'u
 monthly_resolution_time = pd.concat([monthly_resolution_sum,monthly_resolution_count], axis=1,join_axes=[monthly_resolution_count.index])
 monthly_resolution_time['average_resolution'] = monthly_resolution_time['monthly_update_time']/monthly_resolution_time['update_time_count']
 monthly_resolution_time['average_resolution'] = monthly_resolution_time.average_resolution.round()
-monthly_resolution_time = monthly_resolution_time[monthly_resolution_time['submitted_at']>='2017-03-04']
+monthly_resolution_time = monthly_resolution_time[monthly_resolution_time['submitted_at']>=last_12_months]
