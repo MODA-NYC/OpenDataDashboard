@@ -30,7 +30,7 @@ ga_date = usp_daily[(usp_daily['ga:date'] >= (dt.today()-timedelta(days=8))) & (
 ga_date_sources = sources_daily[(sources_daily['ga:date'] >= (dt.today()-timedelta(days=8))) & (sources_daily['ga:date'] <= (dt.today()-timedelta(days=1)))]
 
 colors = {
-    'background': '#FFF',
+    'background': '#000',
     'text': '#D3D3D3'
 }
 
@@ -89,32 +89,32 @@ trace3_status = go.Bar(
 #Traces for Google Analytics
 
 trace1_source = go.Bar(
-  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Direct']['ga:date'],
-  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Direct']['ga:users'],
+  x=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:date'],
+  y=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:users'],
   name='Direct'
 )
 
 trace2_source = go.Bar(
-  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Organic Search']['ga:date'],
-  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Organic Search']['ga:users'],
+  x=sources_monthly[sources_monthly['ga:channelGrouping']=='Organic Search']['ga:date'],
+  y=sources_monthly[sources_monthly['ga:channelGrouping']=='Organic Search']['ga:users'],
   name='Organic Search'
 )
 
 trace3_source = go.Bar(
-  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Referral']['ga:date'],
-  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Referral']['ga:users'],
+  x=sources_monthly[sources_monthly['ga:channelGrouping']=='Referral']['ga:date'],
+  y=sources_monthly[sources_monthly['ga:channelGrouping']=='Referral']['ga:users'],
   name='Referral'
 )
 
 trace4_source = go.Bar(
-  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Social']['ga:date'],
-  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Social']['ga:users'],
+  x=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:date'],
+  y=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:users'],
   name='Social'
 )
 
 trace5_source = go.Bar(
-  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Email']['ga:date'],
-  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Email']['ga:users'],
+  x=sources_monthly[sources_monthly['ga:channelGrouping']=='Email']['ga:date'],
+  y=sources_monthly[sources_monthly['ga:channelGrouping']=='Email']['ga:users'],
   name='Email'
 )
 
@@ -133,6 +133,7 @@ def generate_table(dataframe, max_rows=1000):
 
 app = dash.Dash()
 app.layout = html.Div([
+
   html.Div(
     className='row',
     children=[    
@@ -254,13 +255,13 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='User Acquisition Channels', title='These are user acquisition methods'
+                    children='User Acquisition Channels (last 12 mos.)'
                   ),
                   html.Div(
                     children=dcc.Graph(
                       id='ga_sources',
                       figure=go.Figure(data=[trace1_source,trace2_source, trace3_source, trace4_source, trace5_source],
-                      layout=go.Layout(barmode='stack',height=300,margin={'l': 60, 'b': 40, 't': 20, 'r': 5},yaxis={'title': 'Users Acquired'}))
+                      layout=go.Layout(barmode='stack',height=300,margin={'l': 60, 'b': 40, 't': 20, 'r': 5},yaxis={'title': 'Users Acquired', 'autorange': False, 'range' : [0,320000]}))
                     )
                   )
                 ]
