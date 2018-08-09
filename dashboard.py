@@ -10,23 +10,63 @@ from datetime import datetime as dt
 import dash_table_experiments as dte
 
 
-ga_data = ga_helpers.load_ga_data()
-ga_data = ga_helpers.cast_ga_data(ga_data)
-source = ga_helpers.load_sources()
-sources_df = ga_helpers.make_sources(source)
-usp_daily = ga_helpers.make_usp(ga_data, freq='d')
-usp_weekly = ga_helpers.make_usp(ga_data, freq='W')
-usp_monthly = ga_helpers.make_usp(ga_data, freq='M')
+
+usp_data = ga_helpers.load_ga_data()
+usp_data = ga_helpers.cast_ga_data(usp_data)
+sources_data = ga_helpers.load_sources_data()
+sources_data = ga_helpers.cast_sources_data(sources_data)
+usp_daily = ga_helpers.make_usp(usp_data, freq='d')
+usp_weekly = ga_helpers.make_usp(usp_data, freq='W')
+usp_monthly = ga_helpers.make_usp(usp_data, freq='M')
+sources_daily = ga_helpers.make_sources(sources_data, freq='d')
+sources_weekly = ga_helpers.make_sources(sources_data, freq='W')
+sources_monthly = ga_helpers.make_sources(sources_data, freq='M')
 
 
-
+today_string = dt.today().strftime('%B %d, %Y')
 today = dt.today().strftime('%Y-%m-%d')
+
 ga_date = usp_daily[(usp_daily['ga:date'] >= (dt.today()-timedelta(days=8))) & (usp_daily['ga:date'] <= (dt.today()-timedelta(days=1)))]
+ga_date_sources = sources_daily[(sources_daily['ga:date'] >= (dt.today()-timedelta(days=8))) & (sources_daily['ga:date'] <= (dt.today()-timedelta(days=1)))]
 
 colors = {
     'background': '#FFF',
     'text': '#D3D3D3'
 }
+
+#Traces for Inquiry Type 
+
+
+trace1_inquiry = go.Bar(
+  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['submitted_at'],
+  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['id'],
+  name='Data Question'
+)
+
+trace2_inquiry = go.Bar(
+  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['submitted_at'],
+  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['id'],
+  name='General Inquiry'
+)
+
+trace3_inquiry = go.Bar(
+  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['submitted_at'],
+  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['id'],
+  name='Other'
+)
+
+trace4_inquiry = go.Bar(
+  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['submitted_at'],
+  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['id'],
+  name='Report Error'
+)
+
+trace5_inquiry = go.Bar(
+  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
+  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['id'],
+  name='Request a Dataset'
+)
+
 
 #Traces for Screendoor
 
@@ -49,66 +89,35 @@ trace3_status = go.Bar(
 #Traces for Google Analytics
 
 trace1_source = go.Bar(
-  x=sources_df[sources_df['ga:channelGrouping']=='Direct']['ga:date'],
-  y=sources_df[sources_df['ga:channelGrouping']=='Direct']['ga:users'],
+  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Direct']['ga:date'],
+  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Direct']['ga:users'],
   name='Direct'
 )
 
 trace2_source = go.Bar(
-  x=sources_df[sources_df['ga:channelGrouping']=='Organic Search']['ga:date'],
-  y=sources_df[sources_df['ga:channelGrouping']=='Organic Search']['ga:users'],
+  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Organic Search']['ga:date'],
+  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Organic Search']['ga:users'],
   name='Organic Search'
 )
 
 trace3_source = go.Bar(
-  x=sources_df[sources_df['ga:channelGrouping']=='Referral']['ga:date'],
-  y=sources_df[sources_df['ga:channelGrouping']=='Referral']['ga:users'],
+  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Referral']['ga:date'],
+  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Referral']['ga:users'],
   name='Referral'
 )
 
 trace4_source = go.Bar(
-  x=sources_df[sources_df['ga:channelGrouping']=='Social']['ga:date'],
-  y=sources_df[sources_df['ga:channelGrouping']=='Social']['ga:users'],
+  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Social']['ga:date'],
+  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Social']['ga:users'],
   name='Social'
 )
 
 trace5_source = go.Bar(
-  x=sources_df[sources_df['ga:channelGrouping']=='Email']['ga:date'],
-  y=sources_df[sources_df['ga:channelGrouping']=='Email']['ga:users'],
+  x=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Email']['ga:date'],
+  y=ga_date_sources[ga_date_sources['ga:channelGrouping']=='Email']['ga:users'],
   name='Email'
 )
 
-#Traces for Inquiry Type 
-
-trace1_inquiry = go.Bar(
-  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
-  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['id'],
-  name='Request a Dataset'
-)
-
-trace2_inquiry = go.Bar(
-  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['submitted_at'],
-  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['id'],
-  name='General Inquiry'
-)
-
-trace3_inquiry = go.Bar(
-  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['submitted_at'],
-  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['id'],
-  name='Data Question'
-)
-
-trace4_inquiry = go.Bar(
-  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['submitted_at'],
-  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['id'],
-  name='Report Error'
-)
-
-trace5_inquiry = go.Bar(
-  x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['submitted_at'],
-  y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['id'],
-  name='Other'
-)
 #Socrata table
 
 def generate_table(dataframe, max_rows=1000):
@@ -131,12 +140,12 @@ app.layout = html.Div([
         children='Open Data Dashboard'
       ),
       html.P(
-        children='Updated as of ' + today
+        children='Updated as of ' + today_string
       ),
     ]
   ),
   dcc.Tabs(id='tabs', value='tab1', children=[
-    dcc.Tab(label='Website Usage', value='tab1', selected_style={'height':'45'}, style={'height':'45'}, children=[
+    dcc.Tab(label='User Engagement', value='tab1', selected_style={'height':'45'}, style={'height':'45'}, children=[
       html.Div(
         className='row',
         children=[
@@ -162,7 +171,7 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='Website Users, Sessions and Pageviews', title='Data from Google Analytics'
+                    children='Web Traffic Metrics', title='Data from Google Analytics'
                   ),
                   dcc.Tabs(id='tabs', value='ga_users', style={'padding':'0'}, content_style={'height':300},children=[
                     dcc.Tab(label='Users', value='ga_users', selected_style={'padding':'0','width':'25%','height':'30','textAlign':'center','verticalAlign':'middle'}, style={'padding':'0','width':'25%','height':'30','textAlign':'center','verticalAlign':'middle'}, children=[
@@ -177,7 +186,7 @@ app.layout = html.Div([
                             'layout': {
                               'height': 300,
                               'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
-                              'yaxis': {'title': 'Users','autorange': False, 'range' : [0,(ga_date['ga:users'].max()*1.15)]}
+                              'yaxis': {'title': 'Users','autorange': False, 'range' : [0,(ga_date['ga:users'].max()*1.30)]}
                             }
                           }
                         )
@@ -189,12 +198,12 @@ app.layout = html.Div([
                           id='ga_sessions',
                           figure={
                             'data': [
-                              {'x': ga_date['ga:date'], 'y': ga_date['ga:sessions'],'type': 'scatter', 'name': 'Users'}
+                              {'x': ga_date['ga:date'], 'y': ga_date['ga:sessions'],'type': 'scatter', 'name': 'Sessions'}
                             ],
                             'layout': {
                               'height': 300,
                               'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
-                              'yaxis': {'title': 'Sessions', 'autorange': False, 'range' : [0,(ga_date['ga:sessions'].max()*1.15)]}
+                              'yaxis': {'title': 'Sessions', 'autorange': False, 'range' : [0,(ga_date['ga:sessions'].max()*1.30)]}
                             }
                           }
                         )
@@ -206,12 +215,12 @@ app.layout = html.Div([
                           id='ga_pageviews',
                           figure={
                             'data': [
-                              {'x': ga_date['ga:date'], 'y': ga_date['ga:pageviews'],'type': 'scatter', 'name': 'Users'}
+                              {'x': ga_date['ga:date'], 'y': ga_date['ga:pageviews'],'type': 'scatter', 'name': 'Pageviews'}
                             ],
                             'layout': {
                               'height': 300,
                               'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
-                              'yaxis': {'title': 'Pageviews', 'autorange': False, 'range' : [0,(ga_date['ga:pageviews'].max()*1.15)]}
+                              'yaxis': {'title': 'Pageviews', 'autorange': False, 'range' : [0,(ga_date['ga:pageviews'].max()*1.30)]}
                             }
                           }
                         )
@@ -223,12 +232,12 @@ app.layout = html.Div([
                           id='ga_bounce_rate',
                           figure={
                             'data': [
-                              {'x': ga_date['ga:date'], 'y': ga_date['bounce_rate'],'type': 'scatter', 'name': 'Users'}
+                              {'x': ga_date['ga:date'], 'y': ga_date['bounce_rate'],'type': 'scatter', 'name': 'Bounce Rate'}
                             ],
                             'layout': {
                               'height': 300,
                               'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
-                              'yaxis': {'title': 'Bounce Rate', 'autorange': False, 'range' : [0,(ga_date['bounce_rate'].max()*1.15)]}
+                              'yaxis': {'title': 'Bounce Rate', 'autorange': False, 'range' : [0,(ga_date['bounce_rate'].max()*1.30)]}
                             }
                           }
                         )
@@ -245,13 +254,13 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='Website User Acquisition', title='These are user acquisition methods'
+                    children='User Acquisition Channels', title='These are user acquisition methods'
                   ),
                   html.Div(
                     children=dcc.Graph(
                       id='ga_sources',
                       figure=go.Figure(data=[trace1_source,trace2_source, trace3_source, trace4_source, trace5_source],
-                      layout=go.Layout(barmode='stack',height=300,margin={'l': 60, 'b': 20, 't': 20, 'r': 5},yaxis={'title': 'Users Acquired'}))
+                      layout=go.Layout(barmode='stack',height=300,margin={'l': 60, 'b': 40, 't': 20, 'r': 5},yaxis={'title': 'Users Acquired'}))
                     )
                   )
                 ]
@@ -269,7 +278,7 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='Helpdesk Inquiries by Month'
+                    children='Help Desk Inquiry Type & Volume by Month (last 12 mos.)'
                   ),
                   html.Div(
                     children=dcc.Graph(
@@ -288,7 +297,7 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='Helpdesk Average Monthly Inquiry Resolution Time'
+                    children='Help Desk Average Monthly Inquiry Resolution Time by Inquiry Type (last 12 mos.)'
                   ),
                   dcc.Graph(
                     id='inquiry_resolution_time',
@@ -317,7 +326,7 @@ app.layout = html.Div([
               html.Div(
                 children=[
                   html.H6(
-                    children='Helpdesk Total Inquiries by Type and Status'
+                    children='Total Help Desk Inquiries by Type and Status (last 12 mos.)'
                   ),
                   dcc.Graph(
                     id='request_by_status_grouped',
@@ -333,11 +342,11 @@ app.layout = html.Div([
         ]
       )
     ]),
-    dcc.Tab(label='Data Asset Compliance', selected_style={'height':'45'}, style={'height':'45'}, children=[
+    dcc.Tab(label='Asset Management', selected_style={'height':'45'}, style={'height':'45'}, children=[
       html.Div(
         children=[
           html.H6(
-            children='Asset Compliance Check', title='Asset Status Check'
+            children='Asset Management Status by Dataset', title='Asset Management Status by Dataset'
           ),
           dte.DataTable(
             rows=asset_status_check, # initialise the rows
@@ -351,7 +360,7 @@ app.layout = html.Div([
             id='asset_status_check'
           ),
           html.H6(
-            children='Agency Compliance Check', title='Agency Status Check'
+            children='Agency Asset Summaries ', title='Agency Asset Summaries '
           ),
           dte.DataTable(
             rows=agency_status_check, # initialise the rows
@@ -368,6 +377,7 @@ app.layout = html.Div([
       )
     ]),
     dcc.Tab(label='Definitions', selected_style={'height':'45'}, style={'height':'45'}, children=[
+      
     ]),
   ])
 ])   
@@ -381,36 +391,122 @@ app.css.append_css({
     Output('ga_sessions', 'figure'),
     [Input('ga-date-picker-range', 'start_date'),
     Input('ga-date-picker-range', 'end_date')])
-
-def update_google_scatter(start_date, end_date):
+def update_sessions_scatter(start_date, end_date):
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
       end_date = dt.strptime(end_date, '%Y-%m-%d')
       day_difference = end_date - start_date
 
-      if (day_difference < timedelta(days=20)):
-        usp_daily_windowed = usp_daily[(usp_daily['ga:date'] >= start_date) & (usp_daily['ga:date'] <= end_date)]
-         
+      if (day_difference < timedelta(days=27)):
+        usp_daily_windowed = usp_daily[(usp_daily['ga:date'] >= start_date) & (usp_daily['ga:date'] <= end_date)]        
       elif (day_difference < timedelta(days=90)):
-        usp_daily_windowed = usp_weekly[(usp_weekly['ga:date'] >= start_date) & (usp_weekly['ga:date'] <= end_date)]
-        
+        usp_daily_windowed = usp_weekly[(usp_weekly['ga:date'] >= start_date) & (usp_weekly['ga:date'] <= end_date)]       
       else:
-        usp_daily_windowed = usp_monthly[(usp_monthly['ga:date'] >= start_date) & (usp_monthly['ga:date'] <= end_date)]
-        
-    
+        usp_daily_windowed = usp_monthly[(usp_monthly['ga:date'] >= start_date) & (usp_monthly['ga:date'] <= end_date)]  
       figure = {
-
         'data': [
           {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:sessions'],'type': 'scatter'}
         ],
         'layout': {
-          'height': 200,
-          'margin': {'l': 30, 'b': 20, 't': 10, 'r': 5},
-          'yaxis': {'autorange': False, 'range' : [0,usp_daily_windowed['ga:sessions'].max()]}
+          'height': 300,
+          'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
+          'yaxis': {'title': 'Sessions', 'autorange': False, 'range' : [0,(usp_daily_windowed['ga:sessions'].max()*1.30)]}
         }
       }
   return figure
+
+@app.callback(
+    Output('ga_users', 'figure'),
+    [Input('ga-date-picker-range', 'start_date'),
+    Input('ga-date-picker-range', 'end_date')])
+def update_user_scatter(start_date, end_date):
+  if start_date is not None:
+    if end_date is not None: 
+      start_date = dt.strptime(start_date, '%Y-%m-%d')
+      end_date = dt.strptime(end_date, '%Y-%m-%d')
+      day_difference = end_date - start_date
+
+      if (day_difference < timedelta(days=27)):
+        usp_daily_windowed = usp_daily[(usp_daily['ga:date'] >= start_date) & (usp_daily['ga:date'] <= end_date)]        
+      elif (day_difference < timedelta(days=90)):
+        usp_daily_windowed = usp_weekly[(usp_weekly['ga:date'] >= start_date) & (usp_weekly['ga:date'] <= end_date)]       
+      else:
+        usp_daily_windowed = usp_monthly[(usp_monthly['ga:date'] >= start_date) & (usp_monthly['ga:date'] <= end_date)]
+            
+      figure = {
+
+        'data': [
+          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:users'],'type': 'scatter', 'name': 'Users'},
+          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:newUsers'],'type': 'scatter', 'name': 'New Users'}
+        ],
+        'layout': {
+          'height': 300,
+          'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
+          'yaxis': {'title': 'Users','autorange': False, 'range' : [0,(usp_daily_windowed['ga:users'].max()*1.30)]}
+        }
+      }
+  return figure
+
+@app.callback(
+    Output('ga_pageviews', 'figure'),
+    [Input('ga-date-picker-range', 'start_date'),
+    Input('ga-date-picker-range', 'end_date')])
+def update_pageviews_scatter(start_date, end_date):
+  if start_date is not None:
+    if end_date is not None: 
+      start_date = dt.strptime(start_date, '%Y-%m-%d')
+      end_date = dt.strptime(end_date, '%Y-%m-%d')
+      day_difference = end_date - start_date
+
+      if (day_difference < timedelta(days=27)):
+        usp_daily_windowed = usp_daily[(usp_daily['ga:date'] >= start_date) & (usp_daily['ga:date'] <= end_date)]        
+      elif (day_difference < timedelta(days=90)):
+        usp_daily_windowed = usp_weekly[(usp_weekly['ga:date'] >= start_date) & (usp_weekly['ga:date'] <= end_date)]       
+      else:
+        usp_daily_windowed = usp_monthly[(usp_monthly['ga:date'] >= start_date) & (usp_monthly['ga:date'] <= end_date)]  
+      figure = {
+        'data': [
+          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:pageviews'],'type': 'scatter'}
+        ],
+        'layout': {
+          'height': 300,
+          'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
+          'yaxis': {'title': 'Pageviews', 'autorange': False, 'range' : [0,(usp_daily_windowed['ga:pageviews'].max()*1.30)]}
+        }
+      }
+  return figure
+
+
+@app.callback(
+    Output('ga_bounce_rate', 'figure'),
+    [Input('ga-date-picker-range', 'start_date'),
+    Input('ga-date-picker-range', 'end_date')])
+def update_bounce_scatter(start_date, end_date):
+  if start_date is not None:
+    if end_date is not None: 
+      start_date = dt.strptime(start_date, '%Y-%m-%d')
+      end_date = dt.strptime(end_date, '%Y-%m-%d')
+      day_difference = end_date - start_date
+
+      if (day_difference < timedelta(days=27)):
+        usp_daily_windowed = usp_daily[(usp_daily['ga:date'] >= start_date) & (usp_daily['ga:date'] <= end_date)]        
+      elif (day_difference < timedelta(days=90)):
+        usp_daily_windowed = usp_weekly[(usp_weekly['ga:date'] >= start_date) & (usp_weekly['ga:date'] <= end_date)]       
+      else:
+        usp_daily_windowed = usp_monthly[(usp_monthly['ga:date'] >= start_date) & (usp_monthly['ga:date'] <= end_date)]  
+      figure = {
+        'data': [
+          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['bounce_rate'],'type': 'scatter'}
+        ],
+        'layout': {
+          'height': 300,
+          'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
+          'yaxis': {'title': 'Bounce Rate', 'autorange': False, 'range' : [0,(usp_daily_windowed['bounce_rate'].max()*1.30)]}
+        }
+      }
+  return figure
+
 
 
 if __name__ == '__main__':
