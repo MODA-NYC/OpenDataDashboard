@@ -42,8 +42,7 @@ def create_main_dataframe(ai):
          (ai.owner=='NYCDOEOPenData')|
          (ai.owner=='Annette'))&\
         (ai.publication_stage=='published')].copy()
-    oppa.dropna(how='all',axis=1,inplace=True)
-    
+    oppa.dropna(how='all',axis=1,inplace=True)   
     return oppa
 
 def assign_dataframe_statuses(oppa):

@@ -1,5 +1,15 @@
+import datetime
+from datetime import datetime, timedelta, time, date
+
 import pandas as pd
+
 from ga_functions import return_ga_data
+
+
+last_year = datetime.now().year-1
+this_month = datetime.now().month
+last_12_months = datetime(last_year, this_month, 1)
+last_12_months = last_12_months.strftime('%Y-%m-%d')
 
 
 #collect users, sessions, pageviews (usp) from google analytics api
