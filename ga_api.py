@@ -73,9 +73,9 @@ def make_usp(usp_data, freq='d'):
     usp['bounce_rate'] = usp['ga:bounces'] / usp['ga:sessions']
     return usp
 
-def make_sources (sources_data, freq='d'):
+def make_sources (sources_data):
     """Create sources dataframe and reformate data types."""
-    sources = sources_data.groupby(['ga:channelGrouping', pd.Grouper(key='ga:date', freq=freq)]).sum()
-    sources = sources.reset_index()
+    sources = sources_data.groupby(['ga:channelGrouping', pd.Grouper(key='ga:date', freq='M')]).sum().reset_index()
+    sources['ga:date'] = sources['ga:date'].astype('datetime64[M]')
     return sources
 

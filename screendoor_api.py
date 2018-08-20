@@ -62,19 +62,21 @@ def group_requests_by_type_and_status(screendoor_df):
 
 def group_inquiries_by_month_and_type(screendoor_df):
 	#count monthly submissions by type
-	monthly_submissions = screendoor_df.groupby(['request_type_grouped', pd.Grouper(key='submitted_at', freq='M')])['id'].count()
-	monthly_submissions = monthly_submissions.reset_index()
+	monthly_submissions = screendoor_df.groupby(['request_type_grouped', pd.Grouper(key='submitted_at', freq='M')])['id'].count().reset_index()
+	monthly_submissions['submitted_at'] = monthly_submissions['submitted_at'].astype('datetime64[M]')
 	monthly_submissions = monthly_submissions[monthly_submissions['submitted_at']>=last_12_months]
 	return monthly_submissions
 
 def calculate_average_resolution_time(screendoor_df):
 	#calculate monthly update time by request type and week
 	monthly_resolution_sum = screendoor_df.groupby(['request_type_grouped', pd.Grouper(key='submitted_at', freq='M')])['update_time'].sum().reset_index()
+	monthly_resolution_sum['submitted_at'] = monthly_resolution_sum['submitted_at'].astype('datetime64[M]')
 	monthly_resolution_sum = monthly_resolution_sum.rename(index=str,columns={'update_time':'monthly_update_time'})
 	monthly_resolution_sum = monthly_resolution_sum[['monthly_update_time']]
 
 	#calculate number of monthly submissions request type 
 	monthly_resolution_count = screendoor_df.groupby(['request_type_grouped', pd.Grouper(key='submitted_at', freq='M')])['update_time'].count().reset_index()
+	monthly_resolution_count['submitted_at'] = monthly_resolution_count['submitted_at'].astype('datetime64[M]')
 	monthly_resolution_count = monthly_resolution_count.rename(index=str,columns={'update_time':'update_time_count'})
 
 	#join monthly_resolution_sum and monthly_resolution_count to get average monthly resolution time per inquiry type
