@@ -22,6 +22,7 @@ usp_daily = ga_helpers.make_usp(usp_data, freq='d')
 usp_weekly = ga_helpers.make_usp(usp_data, freq='W')
 usp_monthly = ga_helpers.make_usp(usp_data, freq='M')
 sources_monthly = ga_helpers.make_sources(sources_data)
+print('finished google analytics api')
 
 #Socrata Analytics API
 socrata_data = socrata_helpers.call_socrata_api()
@@ -29,6 +30,7 @@ socrata_data = socrata_helpers.create_main_dataframe(socrata_data)
 socrata_data = socrata_helpers.assign_dataframe_statuses(socrata_data)
 asset_status_check = socrata_helpers.create_asset_status_check(socrata_data)
 agency_status_check = socrata_helpers.create_agency_status_check(socrata_data)
+print('finished socrata analytics api')
 
 #Screendoor Analytics API
 screendoor_data = screendoor_helpers.call_screendoor_api()
@@ -37,7 +39,7 @@ screendoor_data = screendoor_helpers.format_screendoor_data(screendoor_data)
 requests_by_status_grouped = screendoor_helpers.group_requests_by_type_and_status(screendoor_data)
 monthly_submissions = screendoor_helpers.group_inquiries_by_month_and_type(screendoor_data)
 monthly_resolution_time = screendoor_helpers.calculate_average_resolution_time(screendoor_data)
-
+print('finished screendoor analytics api')
 
 
 """Dashboard variables"""
@@ -214,7 +216,7 @@ app.layout = html.Div([
   ),
 
 
-  dcc.Tabs(id='tabs', value='tab1', style={'valign':'middle'}, children=[
+  dcc.Tabs(id='tabs_', value='tab1', style={'valign':'middle'}, children=[
 
     dcc.Tab(label='User Engagement', value='tab1', selected_style={'padding': 10, 'textAlign':'center' ,'height':'45'}, style={'padding': 10, 'textAlign':'center','height':'45'}, children=[
       
@@ -656,6 +658,7 @@ def update_user_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_sessions_scatter(start_date, end_date):
+  figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -684,6 +687,7 @@ def update_sessions_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_pageviews_scatter(start_date, end_date):
+  figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -712,6 +716,7 @@ def update_pageviews_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_bounce_scatter(start_date, end_date):
+  figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -738,25 +743,5 @@ def update_bounce_scatter(start_date, end_date):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    app.run_server(host='0.0.0.0', port=5000, debug=True)
 
