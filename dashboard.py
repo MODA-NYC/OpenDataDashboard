@@ -211,7 +211,7 @@ app.layout = html.Div([
   html.Div(
     className = 'row',
     children = [
-      dcc.Markdown('###### This dashboard is meant to help support the operations of the NYC Open Data Team and Open Data Coordinators. Visit NYC Open Data via [www.nyc.gov/opendata](www.nyc.gov/opendata) and explore our code on [GitHub](https://github.com/MODA-NYC/OpenDataDashboard).')
+      dcc.Markdown('###### This dashboard is meant to help support the operations of the NYC Open Data Team and Open Data Coordinators. Visit [NYC Open Data](https://opendata.cityofnewyork.us/) and explore our code on [GitHub](https://github.com/MODA-NYC/OpenDataDashboard).')
     ]
   ),
 
@@ -658,7 +658,7 @@ def update_user_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_sessions_scatter(start_date, end_date):
-  figure={} #instantiate figure object
+  #figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -687,7 +687,7 @@ def update_sessions_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_pageviews_scatter(start_date, end_date):
-  figure={} #instantiate figure object
+  #figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -716,7 +716,7 @@ def update_pageviews_scatter(start_date, end_date):
   [Input('ga-date-picker-range', 'start_date'),
   Input('ga-date-picker-range', 'end_date')])
 def update_bounce_scatter(start_date, end_date):
-  figure={} #instantiate figure object
+  #figure={} #instantiate figure object
   if start_date is not None:
     if end_date is not None: 
       start_date = dt.strptime(start_date, '%Y-%m-%d')
@@ -744,4 +744,5 @@ def update_bounce_scatter(start_date, end_date):
 
 if __name__ == '__main__':
      app.run_server(host='0.0.0.0', port=5000, debug=True)
+
 
