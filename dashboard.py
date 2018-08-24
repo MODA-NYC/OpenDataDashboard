@@ -59,19 +59,19 @@ trace1_inquiry = go.Bar(
 trace2_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['id'],
-  marker={'color':'#f9cdb1'},
+  marker={'color':'#ffc9aa'},
   name='Report Error'
 )
 trace3_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['id'],
-  marker={'color':'#fca776'},
+  marker={'color':'#ED7B14'},
   name='Request a Dataset'
 )
 trace4_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['id'],
-  marker={'color':'#ED7B14'},
+  marker={'color':'#aac4e2'},
   name='General Inquiry'
 )
 trace5_inquiry = go.Bar(
@@ -92,21 +92,21 @@ trace1_resolution = go.Scatter(
 trace2_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'General Inquiry']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'General Inquiry']['average_resolution'],
-  line={'color':'#ED7B14', 'width': 4},
+  line={'color':'#aac4e2', 'width': 4},
   mode='lines',
   name='General Inquiry'
 )
 trace3_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Request a Dataset']['average_resolution'],
-  line={'color':'#fca776', 'width': 4},
+  line={'color':'#ED7B14', 'width': 4},
   mode='lines',
   name='Request a Dataset'
 )
 trace4_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Report Error']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Report Error']['average_resolution'],
-  line={'color':'#f9cdb1', 'width': 4},
+  line={'color':'#ffc9aa', 'width': 4},
   mode='lines',
   name='Report Error'
 )
@@ -148,13 +148,13 @@ trace1_source = go.Bar(
 trace2_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:users'],
-  marker={'color':'#aac4e2'},
+  marker={'color':'#75a9d6'},
   name='Social'
 )
 trace3_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:users'],
-  marker={'color':'#75a9d6'},
+  marker={'color':'#fca776'},
   name='Direct'
 )
 trace4_source = go.Bar(
@@ -744,5 +744,6 @@ def update_bounce_scatter(start_date, end_date):
 
 if __name__ == '__main__':
      app.run_server(host='0.0.0.0', port=5000, debug=True)
+
 
 
