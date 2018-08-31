@@ -53,31 +53,31 @@ ga_date = usp_daily[(usp_daily['ga:date'] >= (dt.today()-timedelta(days=8))) & (
 trace1_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Other']['id'],
-  marker={'color':'#c1580d'},
+  marker={'color':'#d64132'},
   name='Other'
 )
 trace2_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Report Error']['id'],
-  marker={'color':'#ffc9aa'},
+  marker={'color':'#57b4dd'},
   name='Report Error'
 )
 trace3_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Request a Dataset']['id'],
-  marker={'color':'#ED7B14'},
+  marker={'color':'#6c648b'},
   name='Request a Dataset'
 )
 trace4_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'General Inquiry']['id'],
-  marker={'color':'#aac4e2'},
+  marker={'color':'#f5bd40'},
   name='General Inquiry'
 )
 trace5_inquiry = go.Bar(
   x=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['submitted_at'],
   y=monthly_submissions[monthly_submissions['request_type_grouped'] == 'Data Question']['id'],
-  marker={'color':'#8c3002'},
+  marker={'color':'#248038'},
   name='Data Question'
 )
 
@@ -85,35 +85,35 @@ trace5_inquiry = go.Bar(
 trace1_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Data Question']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Data Question']['average_resolution'], 
-  line={'color':'#8c3002', 'width': 4},
+  line={'color':'#248038', 'width': 4},
   mode='lines',
   name='Data Question'
 )
 trace2_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'General Inquiry']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'General Inquiry']['average_resolution'],
-  line={'color':'#aac4e2', 'width': 4},
+  line={'color':'#f5bd40', 'width': 4},
   mode='lines',
   name='General Inquiry'
 )
 trace3_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Request a Dataset']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Request a Dataset']['average_resolution'],
-  line={'color':'#ED7B14', 'width': 4},
+  line={'color':'#6c648b', 'width': 4},
   mode='lines',
   name='Request a Dataset'
 )
 trace4_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Report Error']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Report Error']['average_resolution'],
-  line={'color':'#ffc9aa', 'width': 4},
+  line={'color':'#57b4dd', 'width': 4},
   mode='lines',
   name='Report Error'
 )
 trace5_resolution = go.Scatter(
   x=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Other']['submitted_at'],
   y=monthly_resolution_time[monthly_resolution_time['request_type_grouped'] == 'Other']['average_resolution'],
-  line={'color':'#c1580d', 'width': 4},
+  line={'color':'#d64132', 'width': 4},
   mode='lines',
   name='Other'
 )
@@ -122,19 +122,19 @@ trace5_resolution = go.Scatter(
 trace1_status = go.Bar(
     x=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Closed']['request_type_grouped'],
     y=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Closed']['id'],
-    marker={'color':'#ffede8'},
+    marker={'color':'#57B4DD'},
     name='Closed'
 )
 trace2_status = go.Bar(
     x=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Pending']['request_type_grouped'],
     y=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Pending']['id'],
-    marker={'color':'#fccbba'},
+    marker={'color':'#F5BD40'},
     name='Pending'
 )
 trace3_status = go.Bar(
     x=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Open']['request_type_grouped'],
     y=requests_by_status_grouped[requests_by_status_grouped['status'] == 'Open']['id'],
-    marker={'color':'#d17155'},
+    marker={'color':'#D64312'},
     name='Open'
 )
 
@@ -142,32 +142,32 @@ trace3_status = go.Bar(
 trace1_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Email']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Email']['ga:users'],
-  marker={'color':'#214670'},
+  marker={'color':'#201f2f'},
   name='Email'
 )
 trace2_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Social']['ga:users'],
-  marker={'color':'#75a9d6'},
+  marker={'color':'#e25d99'},
   name='Social'
 )
 trace3_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Direct']['ga:users'],
-  marker={'color':'#fca776'},
+  marker={'color':'#F5BD40'},
   name='Direct'
 )
 trace4_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Referral']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Referral']['ga:users'],
-  marker={'color':'#c5dce8'},
+  marker={'color':'#ed7b14'},
   name='Referral'
 )
 trace5_source = go.Bar(
   x=sources_monthly[sources_monthly['ga:channelGrouping']=='Organic Search']['ga:date'],
   y=sources_monthly[sources_monthly['ga:channelGrouping']=='Organic Search']['ga:users'],
   name='Organic Search',
-  marker={'color':'#36507c'},
+  marker={'color':'#104177'},
 )
 
 """Generate Socrata tables"""
@@ -295,7 +295,7 @@ app.layout = html.Div([
                           figure={
                             'data': [
                               {'x': ga_date['ga:date'], 'y': ga_date['ga:users'],'type': 'scatter', 'name': 'Users', 'line': {'color': '#294a6d', 'width':4}, 'mode':'lines'},
-                              {'x': ga_date['ga:date'], 'y': ga_date['ga:newUsers'],'type': 'scatter', 'name': 'New Users', 'line': {'color': '#294a6d', 'dash':'dash', 'width':4}, 'mode':'lines'}
+                              {'x': ga_date['ga:date'], 'y': ga_date['ga:newUsers'],'type': 'scatter', 'name': 'New Users', 'line': {'color': '#ed7b14', 'dash':'dash', 'width':4}, 'mode':'lines'}
                             ],
                             'layout': {
                               'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
@@ -489,11 +489,11 @@ app.layout = html.Div([
         ]
       )
     ]),
-    dcc.Tab(label='Asset Management', selected_style={'padding': 10, 'textAlign':'center' ,'height':'45'}, style={'padding': 10, 'textAlign':'center','height':'45'}, children=[
+    dcc.Tab(label='Data Asset Management', selected_style={'padding': 10, 'textAlign':'center' ,'height':'45'}, style={'padding': 10, 'textAlign':'center','height':'45'}, children=[
       html.Div(
         children=[
           html.H4(
-            children='Asset Management Status by Dataset', title='Asset Management Status by Dataset'
+            children='Data Asset Management Status by Dataset', title='Data Asset Management Status by Dataset'
           ),
           dte.DataTable(
             rows=asset_status_check, # initialise the rows
@@ -517,7 +517,7 @@ app.layout = html.Div([
         ]
       )
     ]),
-    dcc.Tab(label='Definitions', selected_style={'padding': 10, 'textAlign':'center' ,'height':'45'}, style={'padding': 10, 'textAlign':'center','height':'45'}, children=[
+    dcc.Tab(label='Metric Definitions', selected_style={'padding': 10, 'textAlign':'center' ,'height':'45'}, style={'padding': 10, 'textAlign':'center','height':'45'}, children=[
       html.Div(
         className = 'row'
       ),
@@ -580,8 +580,8 @@ app.layout = html.Div([
           className='four columns',
           children = [
             html.Div([
-              html.H3('Asset Management Definitions'),
-              html.P('The Asset Management tab’s visualizations are sourced from the Asset Inventory data accessed via Socrata’s API. Socrata is the vendor that powers the data catalog and user interface for interacting with the assets on NYC Open Data.'),
+              html.H3('Data Asset Management Definitions'),
+              html.P('The Data Asset Management tab’s visualizations are sourced from the Asset Inventory data accessed via Socrata’s API. Socrata is the vendor that powers the data catalog and user interface for interacting with the assets on NYC Open Data.'),
               html.H5('Agency:'),
               html.P('New York City agency name'),
               html.H5('Asset Name:'),
@@ -643,7 +643,7 @@ def update_user_scatter(start_date, end_date):
       figure = {
         'data': [
           {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:users'],'type': 'scatter', 'name': 'Users', 'line': {'color': '#294a6d', 'width':4}, 'mode':'lines'},
-          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:newUsers'],'type': 'scatter', 'name': 'New Users', 'line': {'color': '#294a6d', 'dash':'dash', 'width':4}, 'mode':'lines'}
+          {'x': usp_daily_windowed['ga:date'], 'y': usp_daily_windowed['ga:newUsers'],'type': 'scatter', 'name': 'New Users', 'line': {'color': '#ed7b14', 'dash':'dash', 'width':4}, 'mode':'lines'}
         ],
         'layout': {
           'margin': {'l': 60, 'b': 40, 't': 10, 'r': 60},
@@ -744,6 +744,7 @@ def update_bounce_scatter(start_date, end_date):
 
 if __name__ == '__main__':
      app.run_server(host='0.0.0.0', port=5000, debug=True)
+
 
 
 
