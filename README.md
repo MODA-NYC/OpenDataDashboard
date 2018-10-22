@@ -1,8 +1,8 @@
-#Open Data Dashboard
+# Open Data Dashboard
 
 This repository contains the scripts that run New York City's Open Data Dashboard. 
 
-##Overview
+## Overview
 The dashboard supports the operations of the NYC Open Data Team and Open Data Coordinators by describing key performance metrics of the NYC Open Data Portal.
 
 The dashboard pulls data from three sources: 
@@ -10,11 +10,11 @@ The dashboard pulls data from three sources:
 2. NYC Open Data Asset Inventory Dataset through the Socrata API
 3. NYC Open Data Help Desk Inquiries through the Screendoor API
 
-##Dependencies
+## Dependencies
 * Code is written in Python 3
 * The dashboard was built using [Dash](https://dash.plot.ly/), a python package, version 0.22.0 
 
-##File Descriptions
+## File Descriptions
 Non-Python files:
 
 README.md - Text file in markdown format describing the project and repository
@@ -30,5 +30,5 @@ screendoor_api.py - Calls the Screendoor API and transforms the help desk inquir
 socrata_api.py - Calls the Socrata API and transforms the Asset Inventory data into the dataframes used in the "Asset Management" tables
 
 
-##Acknowledgments
+## Acknowledgments
 * Erik Driessen's [quick_gaapi](https://github.com/edriessen/quick_gaapi)
