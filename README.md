@@ -17,17 +17,17 @@ The dashboard pulls data from three sources:
 ## File Descriptions
 Non-Python files:
 
-README.md - Text file in markdown format describing the project and repository
-requirements.txt - Text file describing the packages required to run the dashboard
+* README.md - Text file in markdown format describing the project and repository
+* requirements.txt - Text file describing the packages required to run the dashboard
 
 Python scripts: 
 
-dashboard.py - Integrates all data streams, creates all visualizations and draws the dashboard interface
-ga_api.py - Transforms the Google Analytics V4 API response data into usable dataframes
-ga_config.py - Configures Google Analytics API call 
-ga_functions.py - Parses and returns API data
-screendoor_api.py - Calls the Screendoor API and transforms the help desk inquiry responses into dataframes
-socrata_api.py - Calls the Socrata API and transforms the Asset Inventory data into the dataframes used in the "Asset Management" tables
+* dashboard.py - Integrates all data streams, creates all visualizations and draws the dashboard interface
+* ga_api.py - Transforms the Google Analytics V4 API response data into usable dataframes
+* ga_config.py - Configures Google Analytics API call 
+* ga_functions.py - Parses and returns API data
+* screendoor_api.py - Calls the Screendoor API and transforms the help desk inquiry responses into dataframes
+* socrata_api.py - Calls the Socrata API and transforms the Asset Inventory data into the dataframes used in the "Asset Management" tables
 
 
 ## Acknowledgments
